@@ -4,18 +4,18 @@
 
 <t:pageTemplate pageTitle="Cars">
     <h1>Cars</h1>
-    <c:forEach var="car" items="${cars}" varStatus="status">
+    <c:forEach var="user" items="${users}" varStatus="status">
         <div class="row">
             <div class="col-md-4">
-                ${car.licensePlate}
+                ${user.username}
             </div>
 
             <div class="col-md-4">
-                ${car.parkingSpot}
+                ${user.email}
             </div>
 
             <div class="col-md-4">
-                ${car.username}
+                ${user.position}
             </div>
         </div>
     </c:forEach>
