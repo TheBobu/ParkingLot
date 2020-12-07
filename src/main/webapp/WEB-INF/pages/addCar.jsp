@@ -4,7 +4,7 @@
 
 <t:pageTemplate pageTitle="Add Car">
     <h1>Add Car</h1>
-    <form class="needs-validation" method="post" action="${pageContext.request.contextPath}/AddCar">
+    <form class="needs-validation" method="post" action="${pageContext.request.contextPath}/Cars/Create">
         <div class="row">
             <div class="col-md-6">
                 <label for="license_plate">License Plate</label>

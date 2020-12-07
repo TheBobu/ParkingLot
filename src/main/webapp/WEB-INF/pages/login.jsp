@@ -3,6 +3,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:pageTemplate pageTitle="Login">
+    <c:if test = "${message!=null}">
+        <div class="alert alert-warning" role="alert">
+            ${message}
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md"></div>
         <div class="col-md">

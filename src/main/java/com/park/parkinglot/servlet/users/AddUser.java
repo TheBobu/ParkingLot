@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.park.parkinglot.servlet;
+package com.park.parkinglot.servlet.users;
 
-import com.park.parkinglot.common.CarDetails;
-import com.park.parkinglot.ejb.CarBean;
+import com.park.parkinglot.ejb.UserBean;
+import com.park.parkinglot.util.PasswordUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -25,18 +22,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author andrei
  */
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole"}))
+@WebServlet(name = "AddUser", urlPatterns = {"/Users/Create"})
+public class AddUser extends HttpServlet {
 
-@DeclareRoles({"AdminRole", "ClientRole"})
-@ServletSecurity(
-        value = @HttpConstraint(
-                rolesAllowed = {"AdminRole"}
-        )
-)
-
-
-@WebServlet(name = "Cars", urlPatterns = {"/Cars"})
-public class Cars extends HttpServlet {
-
+     @Inject
+    UserBean userBean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,25 +37,6 @@ public class Cars extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Inject
-    private CarBean carBean;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Cars</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Cars at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -78,13 +50,7 @@ public class Cars extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("activePage", "Cars");
-        request.setAttribute("numberOfFreeParkingSpots", 10);
-
-        List<CarDetails> cars = carBean.getAllCars();
-        request.setAttribute("cars", cars);
-
-        request.getRequestDispatcher("/WEB-INF/pages/cars.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/pages/addUser.jsp").forward(request,response);
     }
 
     /**
@@ -98,15 +64,13 @@ public class Cars extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String[] carIdsString = request.getParameterValues("car_ids");
-        if (carIdsString != null) {
-            List<Integer> carIds = new ArrayList<>();
-            for (String id : carIdsString) {
-                carIds.add(Integer.parseInt(id));
-            }
-            carBean.deleteCarsByIds(carIds);
-        }
-        response.sendRedirect(request.getContextPath() + "/Cars");
+       String username = request.getParameter("username");
+       String position = request.getParameter("position");
+       String email = request.getParameter("email");
+       String password = request.getParameter("password");
+       String passwordSha256 = PasswordUtil.convertToSha256(password);
+       userBean.createUser(username,email,passwordSha256,position);
+       response.sendRedirect(request.getContextPath()+"/Users");
     }
 
     /**
