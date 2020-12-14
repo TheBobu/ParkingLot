@@ -10,7 +10,7 @@
         <button class="btn btn-danger" type="submit">Delete Cars</button>
         <c:forEach var="car" items="${cars}" varStatus="status">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <input type="checkbox" name="car_ids" value="${car.id}"/>
                 </div>
                 <div class="col-md-2">
