@@ -6,6 +6,7 @@
     <h1>Users</h1>
     <c:if test="${pageContext.request.isUserInRole('AdminRole')}">
          <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/Users/Create" role="button">Add User</a>
+         <button class="btn btn-secondary" type="submit">Invoice</button>
     </c:if>
          <form method="POST" action="${pageContext.request.contextPath}/Users">
     <c:forEach var="user" items="${users}" varStatus="status">
