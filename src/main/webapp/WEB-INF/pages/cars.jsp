@@ -24,6 +24,9 @@
                     ${car.username}
                 </div>
                 <div class="col-md-2">
+                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Cars/AddPhoto?id=${car.id}" role="button">Add photo</a>
+                </div>
+                <div class="col-md-2">
                     <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Cars/Update?id=${car.id}" role="button">Edit Car</a>
                 </div>
             </div>
