@@ -95,7 +95,7 @@ public class Photo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.park.parkinglor.entity.Photo[ id=" + id + " ]";
+        return "com.park.parkinglot.entity.Photo[ id=" + id + " ]";
     }
     
 }
